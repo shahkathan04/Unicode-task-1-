@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>To-Do & Album</title>
+    <style>
+        
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+body {
+    background-color: #7C73C0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#app {
+    background-color: #E8FFCE;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+table {
+    margin-top: 45px;;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ACFADF;
+}
+
+th {
+    background-color: #94ADD7;
+    color: #ffffff;
+}
+
+td {
+    background-color: #E8FFCE;
+}
+.btn-kathan {
+    background-color: #7C73C0;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.btn-kathan:hover {
+    background-color: #94ADD7;
+}
+.expanded-todo {
+    max-width: 300px;
+    word-wrap: break-word;
+}
+.dynamic-item {
+    background-color: #ACFADF;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+}
+.close-todo {
+    margin-top: 16px;
+    text-align: center;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #7C73C0;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+}
+
+.close-todo:hover {
+    background-color: #94ADD7;
+}
+.edit-input {
+    width: 100%;
+    padding: 8px;
+}
+.edit-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    margin-right: 8px;
+}
+
+    </style>
+    <title>Kathan Shah</title>
+</head>
+<body>
+    
+    <div id="app">
+        <table id="user-content" class="w-full border">
+            <thead>
+                <tr class="bg-blue-500">
+                    <th class="py-2 px-4 border">ID</th>
+                    <th class="py-2 px-4 border">Name</th>
+                    <th class="py-2 px-4 border">Username</th>
+                    <th class="py-2 px-4 border">Email</th>
+                    <th class="py-2 px-4 border text-center">To-Do</th>
+                    <th class="py-2 px-4 border text-center">Album</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="todo-content">
+        </div>
+        <div id="album-content"></div>
+    <script> 
+        let loadUsers = async () => {
+            try {
+                let response = await fetch('https://jsonplaceholder.typicode.com/users');
+                let users = await response.json();
+                const userContent = document.querySelector("#user-content");
+
+                for (let i in users) {
+                    const tr = document.createElement("tr");
+                    tr.setAttribute("class", "bg-blue-700 border-b-2 border-blue-600 hover:bg-blue-600 text-xs sm:text-sm");
+
+                    tr.innerHTML = `
+                        <td class="px-6 py-4">${users[i].id}</td>
+                        <td class="sm:px-6 sm:py-4 px-3 py-1">${users[i].name}</td>
+                        <td class="sm:px-6 sm:py-4 px-3 py-1">${users[i].username}</td>
+                        <td class="sm:px-6 sm:py-4 px-3 py-1">${users[i].email}</td>
+                        <td class="sm:px-6 sm:py-4 px-3 py-1 text-center"><button class="btn-kathan" onclick="openTodo"(${users[i].id}>To-Do</button></td>
+                        <td class="sm:px-6 sm:py-4 px-3 py-1 text-center"><button class="btn-kathan" onclick="openAlbum"(${users[i].id})>Album</button></td>
+                    `;
+                    userContent.appendChild(tr);
+                }
+                console.log("Users loaded successfully");
+            } catch (error) {
+                console.error("Error loading users:", error);
+                alert("Error Fetching Data ", error);
+            }
+        }
+        loadUsers();
+      </script>
+</body>
+</html>
